@@ -35,7 +35,6 @@ const handleCheckWord = (checkWord, addWord) => {
     }
 }
 
-
 // 사용자가 입력한 단어를 API 요청
 async function handleRequestApi(word) {
     let checkWord = "";
@@ -63,8 +62,7 @@ async function handleRequestApi(word) {
     }
 }
 
-// 사용자가 입력한 단어의 끝과 입력하 단어의 앞이 같은지 확인
-
+// 사용자가 입력한 단어의 끝과 입력한 단어의 앞이 같은지 확인
 const checkSameWord = (word) => {
     const beforeWord = currentWord.slice(-1);
     const afterWord = word.slice(0, 1);
@@ -85,7 +83,6 @@ const handleInputWord = (evt) => {
 }
 
 // 처음 시작하면 제시어 출력
-
 const presentWord = () => {
     let i = Math.floor(Math.random() * randomWord.length);
     if (currentWord === "") {
@@ -94,6 +91,7 @@ const presentWord = () => {
     }
 }
 
+// 게임을 시작해볼까?
 function gameStart() {
     presentWord();
     wordForm.addEventListener("submit", handleInputWord);
