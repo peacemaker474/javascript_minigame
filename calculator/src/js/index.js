@@ -7,42 +7,59 @@ let firstNumber = "";
 let secondNumber = "";
 let calculate = "";
 let totalNumber = 0;
+let result = "";
+
+const checkTypeNumber = () => {
+    let checkFirst = 0;
+    let checkSecond = 0;
+
+    if (typeof firstNumber === "string") {
+        checkFirst = firstNumber.indexOf(".");
+    } else {
+        checkSecond = secondNumber.indexOf(".");
+    }
+
+    if (checkFirst === 1 || checkSecond === 1) {
+        firstNumber = parseFloat(firstNumber);
+        secondNumber = parseFloat(secondNumber);
+    } else {
+        firstNumber = parseInt(firstNumber);
+        secondNumber = parseInt(secondNumber);
+    }
+}
 
 const calculater = () => {
+    checkTypeNumber();
     switch (calculate) {
         case "/":
-            totalNumber = Math.round((parseInt(firstNumber) / parseInt(secondNumber)) * 10) / 10;
+            totalNumber = Math.round((firstNumber / secondNumber) * 10) / 10;
             break;
-        case "*":
-            totalNumber = Math.round((parseInt(firstNumber) * parseInt(secondNumber)) * 10) / 10;
+        case "X":
+            totalNumber = Math.round((firstNumber * secondNumber) * 10) / 10;
             break;
         case "-":
-            totalNumber = Math.round((parseInt(firstNumber) - parseInt(secondNumber)) * 10) / 10;
+            totalNumber = Math.round((firstNumber - secondNumber) * 10) / 10;
             break;
         case "+":
-            totalNumber = Math.round((parseInt(firstNumber) + parseInt(secondNumber)) * 10) / 10;
+            totalNumber = Math.round((firstNumber + secondNumber) * 10) / 10;
             break;
     }
     showNumber.textContent = totalNumber;
     firstNumber = totalNumber;
     secondNumber = "";
+    calculate = "";
+    result = "";
 }
 
 const handleDivideOperation = (evt) => {
-    const fnOperation = evt.target.textContent;
-    switch (fnOperation) {
-        case "/":
-            calculate = "/";
-            break;
-        case "X":
-            calculate = "*";
-            break;
-        case "-":
-            calculate = "-";
-            break;
-        case "+":
-            calculate = "+";
-            break;
+    if (evt.target.textContent === "=") {
+        result = evt.target.textContent;
+    } else {
+        calculate = evt.target.textContent;
+    }
+
+    if (result === "=") {
+        calculater();
     }
 }
 
@@ -60,7 +77,7 @@ const handleInputNumber = (evt) => {
         showNumber.textContent = firstNumber;
     } else {
         secondNumber += evt.target.textContent;
-        calculater();
+        showNumber.textContent = secondNumber;
     }
 }
 
