@@ -11,16 +11,16 @@ let totalNumber = 0;
 const calculater = () => {
     switch (calculate) {
         case "/":
-            totalNumber = parseInt(firstNumber) / parseInt(secondNumber);
+            totalNumber = Math.round((parseInt(firstNumber) / parseInt(secondNumber)) * 10) / 10;
             break;
         case "*":
-            totalNumber = parseInt(firstNumber) * parseInt(secondNumber);
+            totalNumber = Math.round((parseInt(firstNumber) * parseInt(secondNumber)) * 10) / 10;
             break;
         case "-":
-            totalNumber = parseInt(firstNumber) - parseInt(secondNumber);
+            totalNumber = Math.round((parseInt(firstNumber) - parseInt(secondNumber)) * 10) / 10;
             break;
         case "+":
-            totalNumber = parseInt(firstNumber) + parseInt(secondNumber);
+            totalNumber = Math.round((parseInt(firstNumber) + parseInt(secondNumber)) * 10) / 10;
             break;
     }
     showNumber.textContent = totalNumber;
@@ -43,9 +43,6 @@ const handleDivideOperation = (evt) => {
         case "+":
             calculate = "+";
             break;
-        case "=":
-            calculater();
-            break;
     }
 }
 
@@ -63,6 +60,7 @@ const handleInputNumber = (evt) => {
         showNumber.textContent = firstNumber;
     } else {
         secondNumber += evt.target.textContent;
+        calculater();
     }
 }
 
