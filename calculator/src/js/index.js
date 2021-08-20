@@ -29,7 +29,7 @@ const checkTypeNumber = () => {
     }
 }
 
-const calculater = () => {
+const handlecalculater = () => {
     checkTypeNumber();
     switch (calculate) {
         case "/":
@@ -48,21 +48,27 @@ const calculater = () => {
     showNumber.textContent = totalNumber;
     firstNumber = totalNumber;
     secondNumber = "";
+    calculate = "";
     result = "";
 }
 
 const handleDivideOperation = (evt) => {
     if (evt.target.textContent === "=") {
         result = evt.target.textContent;
+    }
+
+    if (calculate !== "") {
+        handlecalculater();
+        calculate = evt.target.textContent;
     } else {
         calculate = evt.target.textContent;
     }
 
     if (result === "=") {
-        calculater()
+        handlecalculater()
     }
     if (secondNumber !== "") {
-        calculater()
+        handlecalculater()
     }
 }
 
