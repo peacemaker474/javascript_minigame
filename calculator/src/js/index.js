@@ -13,13 +13,14 @@ const checkTypeNumber = () => {
     let checkFirst = 0;
     let checkSecond = 0;
 
-    if (typeof firstNumber === "string") {
+    if (typeof firstNumber === "string" && typeof secondNumber === "string") {
         checkFirst = firstNumber.indexOf(".");
+        checkSecond = secondNumber.indexOf(".");
     } else {
         checkSecond = secondNumber.indexOf(".");
     }
 
-    if (checkFirst === 1 || checkSecond === 1) {
+    if (checkFirst !== -1 || checkSecond !== -1) {
         firstNumber = parseFloat(firstNumber);
         secondNumber = parseFloat(secondNumber);
     } else {
@@ -47,7 +48,6 @@ const calculater = () => {
     showNumber.textContent = totalNumber;
     firstNumber = totalNumber;
     secondNumber = "";
-    calculate = "";
     result = "";
 }
 
@@ -58,9 +58,8 @@ const handleDivideOperation = (evt) => {
         calculate = evt.target.textContent;
     }
 
-    if (result === "=") {
-        calculater();
-    }
+    if (result === "=") calculate();
+    if (secondNumber !== "") calculate();
 }
 
 const handleResetNumber = () => {
