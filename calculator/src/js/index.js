@@ -58,8 +58,12 @@ const handleDivideOperation = (evt) => {
         calculate = evt.target.textContent;
     }
 
-    if (result === "=") calculate();
-    if (secondNumber !== "") calculate();
+    if (result === "=") {
+        calculater()
+    }
+    if (secondNumber !== "") {
+        calculater()
+    }
 }
 
 const handleResetNumber = () => {
