@@ -58,17 +58,13 @@ const handleDivideOperation = (evt) => {
     }
 
     if (calculate !== "") {
-        if (secondNumber !== "") {
-            handlecalculater()
-        }
+        if (secondNumber !== "") handlecalculater()
         calculate = evt.target.textContent;
     } else {
         calculate = evt.target.textContent;
     }
 
-    if (result === "=") {
-        handlecalculater()
-    }
+    if (result === "=") handlecalculater()
 }
 
 const handleResetNumber = () => {
@@ -80,13 +76,30 @@ const handleResetNumber = () => {
 }
 
 const handleInputNumber = (evt) => {
-    if (calculate === "") {
-        firstNumber += evt.target.textContent;
-        showNumber.textContent = firstNumber;
+    let currentNumber = evt.target.textContent;
+    if (firstNumber.indexOf("0") !== 0 || secondNumber === "") {
+        if (calculate === "") {
+            firstNumber += currentNumber;
+            showNumber.textContent = firstNumber;
+        } else {
+            secondNumber += currentNumber;
+            showNumber.textContent = secondNumber;
+        }
     } else {
-        secondNumber += evt.target.textContent;
-        showNumber.textContent = secondNumber;
+        if (
+            (currentNumber === "."
+                && firstNumber.indexOf("0") === 0 && firstNumber.length < 3) ||
+            (calculate === ""
+                && firstNumber.indexOf("0.") === 0)
+        ) {
+            firstNumber += currentNumber;
+            showNumber.textContent = firstNumber;
+        } else if (currentNumber === "." && secondNumber.indexOf("0") === 0 || secondNumber.indexOf("0.") === 0) {
+            secondNumber += currentNumber;
+            showNumber.textContent = secondNumber;
+        }
     }
+    console.log(firstNumber, secondNumber);
 }
 
 function init() {
