@@ -77,29 +77,27 @@ const handleResetNumber = () => {
 
 const handleInputNumber = (evt) => {
     let currentNumber = evt.target.textContent;
-    if (firstNumber.indexOf("0") !== 0 || secondNumber === "") {
-        if (calculate === "") {
+
+    if (calculate === "") {
+        if (firstNumber === "") {
             firstNumber += currentNumber;
             showNumber.textContent = firstNumber;
         } else {
-            secondNumber += currentNumber;
-            showNumber.textContent = secondNumber;
+            if (firstNumber === "0" && currentNumber === ".") {
+                firstNumber += currentNumber;
+                showNumber.textContent = firstNumber;
+            } else if (firstNumber === "0" && currentNumber !== ".") {
+                firstNumber = "0";
+                showNumber.textContent = firstNumber;
+            } else {
+                firstNumber += currentNumber;
+                showNumber.textContent = firstNumber;
+            }
         }
     } else {
-        if (
-            (currentNumber === "."
-                && firstNumber.indexOf("0") === 0 && firstNumber.length < 3) ||
-            (calculate === ""
-                && firstNumber.indexOf("0.") === 0)
-        ) {
-            firstNumber += currentNumber;
-            showNumber.textContent = firstNumber;
-        } else if (currentNumber === "." && secondNumber.indexOf("0") === 0 || secondNumber.indexOf("0.") === 0) {
-            secondNumber += currentNumber;
-            showNumber.textContent = secondNumber;
-        }
+        secondNumber += currentNumber;
+        showNumber.textContent = secondNumber;
     }
-    console.log(firstNumber, secondNumber);
 }
 
 function init() {
