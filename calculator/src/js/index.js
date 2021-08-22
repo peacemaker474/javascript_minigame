@@ -9,6 +9,25 @@ let secondNumber = "";
 let calculate = "";
 let totalNumber = 0;
 let result = "";
+let numberlength = 0;
+
+// 덧셈과 뺄셈 실수 부분 소수점 자리 제어
+const changeFloatNumber = () => {
+    let findDotF = firstNumber.indexOf(".");
+    let countF = firstNumber.slice(findDotF + 1, -1).length;
+
+    let findDotS = secondNumber.indexOf(".");
+    let countS = secondNumber.slice(findDotS + 1, -1).length;
+
+    if (countF > countS) {
+        numberlength = countF;
+    } else {
+        numberlength = countS;
+    }
+
+    firstNumber = parseFloat(firstNumber);
+    secondNumber = parseFloat(secondNumber);
+}
 
 // 정수와 실수 구분 영역
 const checkTypeNumber = () => {
@@ -23,36 +42,51 @@ const checkTypeNumber = () => {
     }
 
     if (checkFirst !== -1 || checkSecond !== -1) {
-        firstNumber = parseFloat(firstNumber);
-        secondNumber = parseFloat(secondNumber);
+        changeFloatNumber();
     } else {
         firstNumber = parseInt(firstNumber);
         secondNumber = parseInt(secondNumber);
     }
 }
 
-// 계산하는 영역
-const handlecalculater = () => {
-    checkTypeNumber();
-    switch (calculate) {
-        case "/":
-            totalNumber = Math.round((firstNumber / secondNumber) * 10) / 10;
-            break;
-        case "X":
-            totalNumber = Math.round((firstNumber * secondNumber) * 10) / 10;
-            break;
-        case "-":
-            totalNumber = Math.round((firstNumber - secondNumber) * 10) / 10;
-            break;
-        case "+":
-            totalNumber = Math.round((firstNumber + secondNumber) * 10) / 10;
-            break;
+// 결과 영역
+const handleResults = () => {
+    let changeStringNumber = String(totalNumber);
+
+    if (changeStringNumber.indexOf(".") !== -1 && changeStringNumber.length > 15) {
+        totalNumber = totalNumber.toFixed(2);
+        showNumber.textContent = totalNumber;
+        firstNumber = totalNumber;
+    } else {
+        showNumber.textContent = totalNumber;
+        firstNumber = totalNumber;
     }
-    showNumber.textContent = totalNumber;
-    firstNumber = totalNumber;
+
     secondNumber = "";
     calculate = "";
     result = "";
+}
+
+// 계산하는 영역
+const handlecalculater = () => {
+    checkTypeNumber();
+
+    switch (calculate) {
+        case "/":
+            totalNumber = firstNumber / secondNumber;
+            break;
+        case "X":
+            totalNumber = firstNumber * secondNumber;
+            break;
+        case "-":
+            totalNumber = (firstNumber - secondNumber).toFixed(numberlength + 1)
+            break;
+        case "+":
+            totalNumber = (firstNumber + secondNumber).toFixed(numberlength + 1)
+            break;
+    }
+
+    handleResults();
 }
 // 사칙 연산 중복 체크
 const checkDoubleOperation = () => {
@@ -83,12 +117,11 @@ const checkDoubleDot = (currentNumber) => {
         firstNumber += currentNumber;
         showNumber.textContent = firstNumber;
     } else if (firstNumber === "0" && currentNumber !== ".") {
-        firstNumber = "0";
+        firstNumber = currentNumber;
         showNumber.textContent = firstNumber;
     } else if (firstNumber.indexOf(".") !== -1 && currentNumber === ".") {
         return false;
-    }
-    else {
+    } else {
         firstNumber += currentNumber;
         showNumber.textContent = firstNumber;
     }
